@@ -5,7 +5,6 @@ stages:
 
 default:
   tags: [docker-common]
-  only: [schedules]
 
 fetch_hrdata_files:
   stage: fetch
@@ -27,6 +26,7 @@ fetch_hrdata_files:
       - hrdata.xml
       - studentdata.csv
     expire_in: 3 days
+  only: [schedules]
 
 #process_files:
 #  stage: process
@@ -39,6 +39,7 @@ fetch_hrdata_files:
 #    paths:
 #      - outfile.xml
 #      - outfile2.xml
+#  only: [schedules]
 #
 #send_to_figshare:
 #  stage: send
@@ -48,3 +49,4 @@ fetch_hrdata_files:
 #    TO_EMAIL:
 #  script:
 #    - curl -fsSL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F bcc=$NL_CSV -F h:Reply-To=$NL_CSV -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$TEXT" $ATTACHMENTS
+#  only: [schedules]
