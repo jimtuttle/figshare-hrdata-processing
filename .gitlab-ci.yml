@@ -8,7 +8,7 @@ default:
 
 fetch_hrdata_files:
   stage: fetch
-  image: amazon/aws-cli
+  image: mikesir87/aws-cli
   before_script:
     - FAILURE_MESSAGE="Must define \$AWS_ACCESS_KEY_ID and \$AWS_SECRET_ACCESS_KEY. Add keys to $CI_PROJECT_URL/-/settings/ci_cd"
     - test -z "$AWS_SECRET_ACCESS_KEY" && echo $FAILURE_MESSAGE && exit 1
