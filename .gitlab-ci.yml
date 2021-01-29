@@ -5,6 +5,7 @@ stages:
 
 default:
   tags: [docker-common]
+  only: [schedules]
 
 fetch_hrdata_files:
   stage: fetch
