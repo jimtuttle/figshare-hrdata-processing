@@ -21,3 +21,29 @@ fetch_hrdata_files:
     - aws s3 cp s3://${HRDATA_BUCKET}/${LATEST_HRDATA_FILE} ./hrdata.xml
     - export LATEST_STUDENTDATA_FILE=$(aws s3 ls $STUDENTDATA_BUCKET --recursive | sort | tail -n 1 | awk '{print $4}') 
     - aws s3 cp s3://${STUDENTDATA_BUCKET}/${LATEST_STUDENTDATA_FILE} ./studentdata.csv
+  artifacts:
+    paths:
+      - hrdata.xml
+      - studentdata.csv
+    expire_in: 3 days
+
+#process_files:
+#  stage: process
+#  image: python:3
+#  script:
+#    - process1.py hrdata.xml > outfile.xml
+#    - process2.py studentdata.csv > outfile2.xml
+#    - # Cache outputs to send
+#  artifacts:
+#    paths:
+#      - outfile.xml
+#      - outfile2.xml
+#
+#send_to_figshare:
+#  stage: send
+#  image: ellimistgh/alpine-curl-git
+#  variables:
+#    FROM_EMAIL:
+#    TO_EMAIL:
+#  script:
+#    - curl -fsSL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F bcc=$NL_CSV -F h:Reply-To=$NL_CSV -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$TEXT" $ATTACHMENTS
