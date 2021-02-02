@@ -115,9 +115,9 @@ def email_changes(adddepts, removedepts):
         for d in removedepts:
             message += "/t {} /n".format(d)
         message += "/n"
-    if not isdev:
-        with open("uniqdeptmsg.txt", "wb") as elements:
-            outxml.write(message)
+    if not is_dev:
+        with open("uniqdeptmsg.txt", "w") as uniqd:
+            uniqd.write(message)
 
 
 if __name__ == "__main__":
