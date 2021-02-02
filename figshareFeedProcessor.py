@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#import boto3
 import xml.etree.ElementTree as ET
 
 
@@ -12,8 +11,8 @@ import xml.etree.ElementTree as ET
 
 
 # Environment variables
+is_dev = 0 # Set to non-zero when running locally for testing
 quota = '1073741824'  # default disk quota
-bucket = 'vtlib-figshare-hrdata'
 inputfile = 'hrdata.xml'
 outputfile = 'hrfeed.xml'
 
@@ -28,11 +27,11 @@ def lambda_handler(event, context):
     # s3.download_file(bucket, 'OBJECT_NAME', filename)
     pass
 
-
 def remediate_file(infile):
     """Takes input XML file.  Returns reformatted XML.
     For records with no email, creates email address from username.
     """
+    uniquedepartments = []
     outxml = ET.Element('HRFeed')
     outxml.tail = '\n'
     outxml.text = '\n'
@@ -53,9 +52,17 @@ def remediate_file(infile):
                 recordelement = ET.SubElement(record, elementname)
                 recordelement.text = email
                 recordelement.tail = '\n'
+            elif elementname == 'Department':
+                if value not in uniquedepartments:
+                    uniquedepartments.append(value)
             elif (elementname == 'PrimaryGroupDescriptor') or (elementname == 'Username'):
                 # XML fields not needed by Figshare
                 continue
+            elif (elementname == 'IsCurrent'):
+                # Change true/false to Y/N
+                recordelement = ET.SubElement(record, elementname)
+                recordelement.text = 'Y' if value == "true" else 'N'
+                recordelement.tail = '\n'
             else:
                 recordelement = ET.SubElement(record, elementname)
                 recordelement.text = value
@@ -64,11 +71,59 @@ def remediate_file(infile):
         quotaelement.text = quota
         quotaelement.tail = '\n'
     outxml = ET.ElementTree(outxml)
-#    with open(outputfile, "wb") as elements:
-#        outxml.write(elements)
-    return outxml
+    if not is_dev:
+        with open(outputfile, "wb") as elements:
+            outxml.write(elements)
+    return outxml, uniquedepartments
+
+
+def departmentchanges(currentdepts):
+    """
+    Find departments that are new and departments that no longer exist in the feed.
+    """
+    existingdepts = [line.rstrip('\n') for line in open(join(os.getcwd(), 'uniquedepartments.txt'))]
+    adddepts = []
+    removedepts = []
+    for d in currentdepts:
+        if d not in existingdepts:
+            adddepts.append(d)
+        else:
+            existingdepts.remove(d)
+    removedepts = existingdepts
+    if (removedepts.len > 0) or (adddepts.len > 0):
+        alert = True
+    else:
+        alert = False
+
+    return alert, adddepts, removedepts
+
+
+def email_changes(adddepts, removedepts):
+    """
+    Email list when values in Department field has changed.
+    """
+    today = date.today()
+    message = "The following changes have been discovered in the HR Feed departement field:/n"
+
+    if adddepts.len > 0:
+        message += "Departments that were newly discovered in the HR Feed:/n"
+        for d in adddepts:
+            message+= "/t {} /n".format(d)
+        message += "/n"
+    if removedepts > 0:
+        message += "Departments that no longer exist in the HR Feed:/n"
+        for d in removedepts:
+            message += "/t {} /n".format(d)
+        message += "/n"
+    if not isdev:
+        with open("uniqdeptmsg.txt", "wb") as elements:
+            outxml.write(message)
 
 
 if __name__ == "__main__":
     inputfile = 'hrdata.xml'
-    output = remediate_file(inputfile)
+    output, currentdepartments = remediate_file(inputfile)
+    alert, adddepts, removedepts = departmentchanges(currentdepartments)
+    if alert:
+            email_changes(adddepts, removedepts)
+    output = lambda_handler('', '')
