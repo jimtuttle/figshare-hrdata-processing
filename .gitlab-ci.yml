@@ -33,20 +33,18 @@ process_files:
   image: python:3
   script:
     - python3 figshareFeedProcessor.py
-#    - process2.py studentdata.csv > outfile2.xml
-#    - # Cache outputs to send
   artifacts:
     paths:
       - hrfeed.xml
-#      - outfile2.xml
+      - uniqdeptmsg.txt
   only: [schedules]
-#
-#send_to_figshare:
+
+#send_emails:
 #  stage: send
 #  image: ellimistgh/alpine-curl-git
 #  variables:
-#    FROM_EMAIL:
-#    TO_EMAIL:
+#    FROM_EMAIL: vtul-systems-g@vt.edu
+#    TO_EMAIL: vtul-systems-g@vt.edu
 #  script:
 #    - curl -fsSL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F bcc=$NL_CSV -F h:Reply-To=$NL_CSV -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$TEXT" $ATTACHMENTS
 #  only: [schedules]
