@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import xml.etree.ElementTree as ET
-
+import os
+from os.path import join
 
 """
     Make changes to incoming HR data from VT Enterprise Systems before feeding to Figshare.
