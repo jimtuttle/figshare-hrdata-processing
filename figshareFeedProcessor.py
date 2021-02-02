@@ -91,7 +91,7 @@ def departmentchanges(currentdepts):
         else:
             existingdepts.remove(d)
     removedepts = existingdepts
-    if (removedepts.len > 0) or (adddepts.len > 0):
+    if (len(removedepts) > 0) or (len(adddepts) > 0):
         alert = True
     else:
         alert = False
@@ -103,15 +103,14 @@ def email_changes(adddepts, removedepts):
     """
     Email list when values in Department field has changed.
     """
-    today = date.today()
     message = "The following changes have been discovered in the HR Feed departement field:/n"
 
-    if adddepts.len > 0:
+    if len(adddepts) > 0:
         message += "Departments that were newly discovered in the HR Feed:/n"
         for d in adddepts:
             message+= "/t {} /n".format(d)
         message += "/n"
-    if removedepts > 0:
+    if len(removedepts) > 0:
         message += "Departments that no longer exist in the HR Feed:/n"
         for d in removedepts:
             message += "/t {} /n".format(d)
