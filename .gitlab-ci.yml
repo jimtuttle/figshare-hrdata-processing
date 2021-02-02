@@ -28,16 +28,16 @@ fetch_hrdata_files:
       - studentdata.csv
     expire_in: 3 days
 
-#process_files:
-#  stage: process
-#  image: python:3
-#  script:
-#    - process1.py hrdata.xml > outfile.xml
+process_files:
+  stage: process
+  image: python:3
+  script:
+    - figshare.py
 #    - process2.py studentdata.csv > outfile2.xml
 #    - # Cache outputs to send
-#  artifacts:
-#    paths:
-#      - outfile.xml
+  artifacts:
+    paths:
+      - hrfeed.xml
 #      - outfile2.xml
 #
 #send_to_figshare:
