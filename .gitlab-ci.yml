@@ -32,14 +32,14 @@ process_files:
   stage: process
   image: python:3
   script:
-    - figshare.py
+    - figshareFeedProcessor.py
 #    - process2.py studentdata.csv > outfile2.xml
 #    - # Cache outputs to send
   artifacts:
     paths:
       - hrfeed.xml
 #      - outfile2.xml
-#  only: [schedules]
+  only: [schedules]
 #
 #send_to_figshare:
 #  stage: send
