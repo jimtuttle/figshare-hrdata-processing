@@ -70,5 +70,5 @@ def remediate_file(infile):
 
 
 if __name__ == "__main__":
-    inputfile = 'figdata.xml'
+    inputfile = 'hrdata.xml'
     output = remediate_file(inputfile)
