@@ -2,6 +2,16 @@
 
 Repository containing scripts to process HRdata for Figshare
 
+## Pipeline Structure
+
+The pipeline is divided into three stages with one job each -
+- fetch_input_files (stage: `fetch`)
+  This fetches the latest file from the `HRDATA_BUCKET` and `STUDENTDATA_BUCKET` and saves them as `hrdata.xml` and `studentdata.csv` which are stored as artifacts so that they are available in the next stage.
+- process_files (stage: `process`)
+  This stage is meant to run the transformation/change on the input files. It runs a single script (`figshareFeedProcessor.py`) and outputs `hrfeed.xml`, and optionally `uniqdeptmsg.txt` depending on whether any new department was added or removed. Both of these files are set as artifacts so that they can be retrieved by the next stage to send the emails.
+- send_things (stage: `send`)
+  This stage is used to send the transformed file to Figshare and optionally send an email to `vtul-figshare-hrfeed-g@vt.edu` as evidenced by the _existence_ of `uniqdeptmsg.txt`.
+
 ## Testing locally
 
 - Clone the Repository
