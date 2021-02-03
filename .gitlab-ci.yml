@@ -17,8 +17,9 @@ fetch_hrdata_files:
     - test -z "$AWS_SECRET_ACCESS_KEY" && echo $FAILURE_MESSAGE && exit 1
     - test -z "$AWS_ACCESS_KEY_ID" && echo $FAILURE_MESSAGE && exit 1
   script:
-    - export LATEST_HRDATA_FILE=$(aws s3 ls $HRDATA_BUCKET --recursive | sort | tail -n 1 | awk '{print $4}')
-    - aws s3 cp s3://${HRDATA_BUCKET}/${LATEST_HRDATA_FILE} ./hrdata.xml
+    #- export LATEST_HRDATA_FILE=$(aws s3 ls $HRDATA_BUCKET --recursive | sort | tail -n 1 | awk '{print $4}')
+    #- aws s3 cp s3://${HRDATA_BUCKET}/${LATEST_HRDATA_FILE} ./hrdata.xml
+    - aws s3api get-object --bucket $HRDATA_BUCKET --key figdata.xml --version-id PTuS8e6roAq5LJybnt5InnLSDNUGDfK0 hrdata.xml
     - export LATEST_STUDENTDATA_FILE=$(aws s3 ls $STUDENTDATA_BUCKET --recursive | sort | tail -n 1 | awk '{print $4}') 
     - aws s3 cp s3://${STUDENTDATA_BUCKET}/${LATEST_STUDENTDATA_FILE} ./studentdata.csv
   artifacts:
