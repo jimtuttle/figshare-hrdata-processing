@@ -6,7 +6,7 @@ stages:
 default:
   tags: [docker-common]
 
-fetch_hrdata_files:
+fetch_input_files:
   stage: fetch
   image: mikesir87/aws-cli
   variables:
@@ -40,12 +40,14 @@ process_files:
       - uniqdeptmsg.txt
   only: [schedules]
 
-#send_emails:
-#  stage: send
-#  image: ellimistgh/alpine-curl-git
-#  variables:
-#    FROM_EMAIL: vtul-systems-g@vt.edu
-#    TO_EMAIL: vtul-systems-g@vt.edu
-#  script:
-#    - curl -fsSL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F bcc=$NL_CSV -F h:Reply-To=$NL_CSV -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$TEXT" $ATTACHMENTS
-#  only: [schedules]
+send_emails:
+  stage: send
+  image: ellimistgh/alpine-curl-git
+  variables:
+    FROM_EMAIL: vtul-systems-g@vt.edu
+    TO_EMAIL: soumikgh@vt.edu
+    SUBJECT: 'Figshare HRFeed Department Changes'
+  script:
+    #- curl -fsSL -X POST -H "Authorization: token $FIGSHARE_TOKEN" -F "hrfeed=@hrfeed.xml" $FIGSHARE_API_URL
+    - if [ -f uniqdeptmsg.txt ]; then curl -fsSL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$(cat uniqdeptmsg.txt)"; fi
+  only: [schedules]
