@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 import xml.etree.ElementTree as ET
-import os
-from os.path import join
 
 """
     Make changes to incoming HR data from VT Enterprise Systems before feeding to Figshare.
@@ -82,7 +80,7 @@ def departmentchanges(currentdepts):
     """
     Find departments that are new and departments that no longer exist in the feed.
     """
-    existingdepts = [line.rstrip('\n') for line in open(join(os.getcwd(), 'uniquedepartments.txt'))]
+    existingdepts = [line.rstrip('\n') for line in open('uniquedepartments.txt')]
     adddepts = []
     removedepts = []
     for d in currentdepts:
