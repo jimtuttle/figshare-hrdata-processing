@@ -49,5 +49,5 @@ send_emails:
     SUBJECT: 'Figshare HRFeed Department Changes'
   script:
     #- curl -fsSL -X POST -H "Authorization: token $FIGSHARE_TOKEN" -F "hrfeed=@hrfeed.xml" $FIGSHARE_API_URL
-    - if [ -f uniqdeptmsg.txt ]; then curl -vL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$(cat uniqdeptmsg.txt)"; fi
+    - if [ -f uniqdeptmsg.txt ]; then curl -fsSL -u api:$MAILGUN_API_KEY $MAILGUN_URL -F from=$FROM_EMAIL -F to=$TO_EMAIL -F subject="$SUBJECT - $(date +%Y-%m-%d)" -F text="$(cat uniqdeptmsg.txt)"; fi
   only: [schedules]
