@@ -4,7 +4,8 @@ stages:
   - send
 
 default:
-  tags: [docker-common]
+  artifacts:
+    expire_in: 3 days
 
 fetch_input_files:
   stage: fetch
@@ -26,7 +27,6 @@ fetch_input_files:
     paths:
       - hrdata.xml
       - studentdata.csv
-    expire_in: 3 days
   only: [schedules]
 
 process_files:
@@ -38,7 +38,6 @@ process_files:
     paths:
       - hrfeed.xml
       - uniqdeptmsg.txt
-    expire_in: 3 days
   only: [schedules]
 
 send_emails:
