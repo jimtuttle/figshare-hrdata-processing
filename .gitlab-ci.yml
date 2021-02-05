@@ -38,6 +38,7 @@ process_files:
     paths:
       - hrfeed.xml
       - uniqdeptmsg.txt
+    expire_in: 3 days
   only: [schedules]
 
 send_emails:
