@@ -1,108 +1,144 @@
 #!/usr/bin/env python3
 import xml.etree.ElementTree as ET
-
-"""
-    Make changes to incoming HR data from VT Enterprise Systems before feeding to Figshare.
-
-    @author jjt
-    @version Oct 1, 2020
-"""
+import iconv   # iconv -f iso-8859-1 -t UTF-8 figdata.xml -o figdata2.xml
+import xmltodict
+from sys import exc_info
+import csv
+from datetime import date
 
 
-# Environment variables
+# Environmental variables
 is_dev = 0 # Set to non-zero when running locally for testing
-quota = '1073741824'  # default disk quota
-inputfile = 'hrdata.xml'
-outputfile = 'hrfeed.xml'
+quota = "1073741824"  # default disk quota
+manualdata = "manualdata.xml"
+staffdata = "figdata.xml"
+studentdata = "student_export.csv"
+xmloutputfile = "hrfeed.xml"
+departmentsfile = "uniquedepartments.txt"
 
 
-def push_to_figshare():
-    """Submit reformatted HR XML to Figshare HR API."""
-    pass
+def process_manual_data(manualfile):
+    try:
+        records = []
+        with open(manualfile, "r",) as f:
+            data = f.read().replace("\n", "")
+        root = ET.fromstring(data)
+        for child in root:
+            record = {}
+            for elem in child:
+                record[elem.tag] = elem.text.strip()
+            records.append(record)
+        return records
+    except():
+        print("Error processing manual file:", exc_info()[0])
 
 
-def lambda_handler(event, context):
-    # s3_client = boto3.client('s3')
-    # s3.download_file(bucket, 'OBJECT_NAME', filename)
-    pass
-
-def remediate_file(infile):
-    """Takes input XML file.  Returns reformatted XML.
-    For records with no email, creates email address from username.
-    """
-    uniquedepartments = []
-    outxml = ET.Element('HRFeed')
-    outxml.tail = '\n'
-    outxml.text = '\n'
-    tree = ET.parse(infile)
-    root = tree.getroot()
-    for child in root:
-        record = ET.SubElement(outxml, 'Record')
-        record.tail = '\n'
-        record.text = '\n'
-        for elem in child:
-            elementname = elem.attrib['name'].replace('[', "").replace("]", "")
-            value = elem.text.strip()
-            if elementname == 'Email' and value == '':
-                for subchild in child:
-                    if subchild.attrib['name'] == '[Username]':
-                        username = subchild.text.strip()
-                        email = username+'@vt.edu'
-                recordelement = ET.SubElement(record, elementname)
-                recordelement.text = email
-                recordelement.tail = '\n'
-            elif elementname == 'Department':
-                if value not in uniquedepartments:
-                    uniquedepartments.append(value)
-            elif (elementname == 'PrimaryGroupDescriptor') or (elementname == 'Username'):
-                # XML fields not needed by Figshare
-                continue
-            elif (elementname == 'IsCurrent'):
-                # Change true/false to Y/N
-                recordelement = ET.SubElement(record, elementname)
-                recordelement.text = 'Y' if value == "true" else 'N'
-                recordelement.tail = '\n'
-            else:
-                recordelement = ET.SubElement(record, elementname)
-                recordelement.text = value
-                recordelement.tail = '\n'
-        quotaelement = ET.SubElement(record, 'Quota')
-        quotaelement.text = quota
-        quotaelement.tail = '\n'
-    outxml = ET.ElementTree(outxml)
-    if not is_dev:
-        with open(outputfile, "wb") as elements:
-            outxml.write(elements)
-    return outxml, uniquedepartments
+def process_staff_data(stafffile):
+    try:
+        records = []
+        with open(stafffile, "r", encoding="iso-8859-1") as f:
+            data = f.read().replace("\n", "")
+        root = ET.fromstring(data)
+        for child in root:
+            record = {}
+            for elem in child:
+                elementname = elem.attrib["name"].replace("[", "").replace("]", "").strip()
+                elementvalue = elem.text.strip()
+                record[elementname] = elementvalue
+            records.append(record)
+        return records
+    except():
+        print("Error processing staff file:", exc_info()[0])
 
 
-def departmentchanges(currentdepts):
-    """
-    Find departments that are new and departments that no longer exist in the feed.
-    """
-    existingdepts = [line.rstrip('\n') for line in open('uniquedepartments.txt')]
-    adddepts = []
-    removedepts = []
-    for d in currentdepts:
-        if d not in existingdepts:
-            adddepts.append(d)
+def process_student_data(studentfile):
+    try:
+        records = []
+        with open(studentfile, newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                records.append(row)
+        return records
+    except():
+        print("Error processing student file:", exc_info()[0])
+
+
+def dedup_records(manual, staff, student):
+    # priority of records: manual, staff, student
+    duplicatecount = 0
+    dedups = []
+    uniqueids = []
+    duplicates = []
+    for record in manual:
+        if record["Proprietary_ID"] not in uniqueids:
+            dedups.append(record)
+            uniqueids.append(record["Proprietary_ID"])
         else:
-            existingdepts.remove(d)
-    removedepts = existingdepts
-    if (len(removedepts) > 0) or (len(adddepts) > 0):
-        alert = True
-    else:
-        alert = False
+            duplicates.append(record["Proprietary_ID"])
+    for record in staff:
+        if record["Proprietary_ID"] not in uniqueids:
+            dedups.append(record)
+            uniqueids.append(record["Proprietary_ID"])
+        else:
+            duplicates.append(record["Proprietary_ID"])
+            duplicatecount += 1
+    for record in student:
+        if record["Proprietary_ID"] not in uniqueids:
+            dedups.append(record)
+            uniqueids.append(record["Proprietary_ID"])
+        else:
+            duplicates.append(record["Proprietary_ID"])
+            duplicatecount += 1
+    return dedups
 
-    return alert, adddepts, removedepts
+
+def find_unique_departments(records):
+    olddepartments = [line.strip() for line in open("uniquedepartments.txt")]  # departments in last processed records
+    newdepartements = []  # departments in current records
+    adddepartments = []  # departments new in current records
+    removedepartments = []  # departments that were in the last processed records but not current records
+    for record in records:
+        d = record["Department"]
+        if d not in newdepartements:
+            newdepartements.append(d)
+    for d in newdepartements:
+        if d not in olddepartments:
+            adddepartments.append(d)
+    for d in olddepartments:
+        if d not in newdepartements:
+            removedepartments.append(d)
+    adddepartments.sort()
+    with open(departmentsfile, mode="wt", encoding="utf-8") as f:
+        f.write("\n".join(newdepartements))
 
 
-def email_changes(adddepts, removedepts):
-    """
-    Email list when values in Department field has changed.
-    """
-    message = "The following changes have been discovered in the HR Feed departement field:/n"
+def create_xml_output(records):
+    outxml = "<HRFeed>\n"
+    for record in records:
+        outxml += "<Record>\n"
+        for key, value in record.items():
+            if key == "IsCurrent":
+                outxml += "<IsCurrent>Y</IsCurrent>\n"
+            elif (key == "PrimaryGroupDescriptor") or (key == "Username"):
+                pass # Figshare isn't using these elements
+            else:
+                outxml += "<%s>%s</%s>\n" % (key, value, key)
+        if "Quota" not in record.keys():
+            outxml += "<Quota>1073741824</Quota>\n"
+        outxml += "</Record>\n"
+    outxml += "</HRFeed>"
+    f = open(xmloutputfile, "w")
+    f.write(outxml)
+    f.close()
+    return outxml
 
+
+def build_message(manualrecs, staffrecs, studentrecs, dedupilcatedrecs, ):
+    message = "Figshare Feed Processor Report: %s \n\n" % (date.today().strftime("%Y-%m-%d"))
+    message += "The following changes have been discovered in the HR Feed department field:/n"
+
+
+def send_email(adddepts, removedepts):
     if len(adddepts) > 0:
         message += "Departments that were newly discovered in the HR Feed:/n"
         for d in adddepts:
@@ -119,9 +155,15 @@ def email_changes(adddepts, removedepts):
 
 
 if __name__ == "__main__":
-    inputfile = 'hrdata.xml'
-    output, currentdepartments = remediate_file(inputfile)
-    alert, adddepts, removedepts = departmentchanges(currentdepartments)
-    if alert:
-            email_changes(adddepts, removedepts)
-    output = lambda_handler('', '')
+    manualrecords = process_manual_data(manualdata)
+    staffrecords = process_staff_data(staffdata)
+    studentrecords = process_student_data(studentdata)
+    dedupilcatedrecords= dedup_records(manualrecords, staffrecords, studentrecords)
+    find_unique_departments(dedupilcatedrecords)
+    xmloutput = create_xml_output(dedupilcatedrecords)
+
+
+
+
+
+
