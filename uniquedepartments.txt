@@ -1,4 +1,5 @@
 Library
+Animal and Poultry Sciences
 School of Architecture and Design
 President - Admin.
 Shenandoah Coop Extension Service
@@ -6,8 +7,6 @@ History
 Business Information Technology
 Civil & Environmental Engineering
 Chemistry
-Electrical and Computer Engineering
-Animal and Poultry Sciences
 Biological Sciences
 Computer Science
 Hospitality and Tourism
@@ -18,12 +17,13 @@ Analytics & IE
 Univ. Academic Advising Center
 Management
 Dinwiddie Coop Extension Service
+Electrical and Computer Engineering
 VTTI - Administrative
 Sustainable Biomaterials
 Geosciences
 Biomedical Engineering & Mechanics
-School of Plant & Environmental Sci
 Advanced Research Institute
+School of Plant & Environmental Sci
 College of Natural Resources & Env.
 Building Construction
 CALS Extension
@@ -154,7 +154,6 @@ Center for Coal & Energy Research
 OVPRI Information Technology
 Alson H. Smith, Jr. AREC
 Office of Engagement Admin
-Vet. Medicine Teaching Hospital
 Prince William Coop Extension Serv
 Horticulture
 Glyco-MIP
@@ -285,8 +284,10 @@ Research/Interdisc. Prog. - Admin
 Stafford Coop Extension Service
 Discovery Analytics Center
 Fairfax Coop Extension Service
+CCI - SWVA Node
 Technology Implementation
 Accomack Coop Extension Service
+Enrollment & Degree Management
 FBRI Poelzing Lab
 Vet Med Advancement
 Norfolk Coop Extension Service
@@ -310,9 +311,7 @@ Biological Sciences / BI
 Newport News Coop Extension Service
 FBRI Fox Lab
 Instit for Creativity, Arts & Tech
-iScholars
 CRMDS
-New Kent Coop Extension Service
 Highland Coop Extension Service
 Lunenburg Coop Extension Service
 CALS Diversity and Inclusion
@@ -331,7 +330,6 @@ Fluvanna Coop Extension Service
 Isle of Wight Coop Extension Serv
 York Coop Extension Service
 Richmond City Coop Extension Serv
-Nelson Coop Extension Service
 Clarke Coop Extension Service
 International Support Services
 Physics-NCR
@@ -369,6 +367,7 @@ Middlesex Coop Extension Service
 Mathews Coop Extension Service
 Intercultural Engagement - Aux
 VT Exec Briefing Ctr-Arlington
+ME - Energy Harvesting Group
 ME - Varied Research Group
 FBRI Sontheimer Lab
 FBRI Smyth Lab
@@ -377,28 +376,25 @@ FBRI Stein Lab
 Engineering Advancement
 Surry Coop Extension Service
 SOAR - Student Opport & Achiev Res
-ME - Energy Harvesting Group
 FBRI Howell Lab
 Ctr - Soft Matter & Biological Phys
-FBRI Parker Lab
 FBRI Robel Lab
 Suffolk Coop Extension Service
 FBRI Johnstone Lab
 Ctr For Intelligent Materials-CIMSS
 Link, Industrial Partnerships-OVPRI
 SoN-Clinton Lab
+Page Coop Extension Service
 Macromolecules Innovation Institute
 SoN-Hodes Lab
 FBRI Pan Lab
 Prince Edward Coop Extension Serv
 FBRI Munson Lab
-Enrollment & Degree Management
 Center for Humanities
 SoN-Buczynski Lab
 FBRI Farris Lab
 SoN-Vijayan Lab
 FBRI Horn Lab
-Page Coop Extension Service
 Goochland Coop Extension Service
 ICTAS Investments
 MBA Program
@@ -418,6 +414,8 @@ Center for Neutrino Physics
 Center for Tire Research
 Virginia Ctr for Civil War Studies
 Philosophy, Politics, and Economics
+FBRI Parker Lab
+Global Change Center
 Business
 Engineering Education
 Graduate Cooperative Program
