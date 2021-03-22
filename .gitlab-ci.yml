@@ -21,7 +21,7 @@ process_files:
   stage: python_script
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
   script:
-    - ./figshareFeedProcessor.py
+    - python3 figshareFeedProcessor.py
   artifacts:
     paths:
       - hrfeed.xml
