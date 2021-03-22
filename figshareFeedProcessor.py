@@ -28,9 +28,9 @@ awskey = environ["AWS_SECRET_ACCESS_KEY"]
 
 def get_aws_files(keyid, accesskey, manualfile, stafffile, studentfile):
     s3 = boto3.client("s3", aws_access_key_id=keyid, aws_secret_access_key=accesskey)
+    s3.download_file("vtlib-figshare-hrdata", manualfile, manualfile)
     s3.download_file("vtlib-figshare-hrdata", stafffile, stafffile)
     s3.download_file("vtlib-figshare-studentdata", studentfile, studentfile)
-    # Where is the manual file?
 
 
 def process_manual_data(manualfile):
