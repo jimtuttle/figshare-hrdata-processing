@@ -24,7 +24,5 @@ process_files:
   script:
     - python3 figshareFeedProcessor.py
   artifacts:
-    paths:
-      - hrfeed.xml
-      - uniqdeptmsg.txt
+    paths: [manualdata.xml, figdata.xml, student_export.csv, hrfeed.xml]
   only: [schedules]
