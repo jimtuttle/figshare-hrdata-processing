@@ -180,12 +180,20 @@ def put_aws_files(keyid, accesskey, xmlfile, deptsfile):
     s3.upload_file(deptsfile, "vtlib-figshare-hrdata", deptsfile)
 
 
+def update_figshare_api(url, token, outputfile):
+    headers = {"Authorization": "token " + token}
+    files = {'hrfeed': outputfile}
+    response = post(url, files=files, headers=headers)
+    print(response.content)
+    response.raise_for_status()
+
+
 def send_message(key, url, sender, recipient, body):
     request_url = url.format()
     subject = "Figshare Feed Processor Report: %s" % (date.today().strftime("%Y-%m-%d"))
     response = post(request_url, auth=('api', key), data={
         "from": sender,
-        "to": "james.tuttle@vt.edu",  # recipient,
+        "to": recipient,
         "subject": subject,
         "text": body
     })
@@ -204,5 +212,5 @@ if __name__ == "__main__":
     messagebody = build_message(manualrecords, staffrecords, studentrecords, dedupilcatedrecords, olddepts, newdepts,
                                 adddepts, removedepts)
     put_aws_files(awsid, awskey, xmloutputfile, departmentsfile)
+    update_figshare_api(figshareurl, figsharetoken, xmloutputfile)
     send_message(mailgunkey, mailgunurl, emailsender, emailrecipient, messagebody)
-    print("done")
