@@ -6,9 +6,9 @@ Repository containing scripts to process HRdata for Figshare
 
 The pipeline is divided into two stages with one job each. Look at the [CI file](.gitlab-ci.yml) for reference.
 - build (stage: `build`)
-  This stage builds the container image used to run the script. It uses a Python image from DockerHub as the base file and installs the dependencies from `requirements.txt`. It only runs with `pushed` changes to `Dockerfile` and `requirements.txt`. Look at the [Dockerfile](Dockerfile) to see the build steps
+  This stage builds the container image used to run the script, and pushes the built image to this repository's container registry. It uses a Python image from DockerHub as the base file and installs the dependencies from `requirements.txt`. It only runs with `pushed` changes to `Dockerfile` and `requirements.txt`. Look at the [Dockerfile](Dockerfile) to see the build steps.
 - process_files (stage: `python_script`)
-  This stage contains James' Python script.
+  This stage contains James' Python script. It runs on the image fetched from the [container registry](https://code.vt.edu/library-systems/figshare-hrdata-processing/container_registry) built by the first stage.
 
 ## Artifacts
 
