@@ -226,6 +226,7 @@ Henry Coop Extension Service
 Southampton Coop Extension Service
 VTTI-Smart Road Division
 Global Engagement
+Innovation Campus
 Engineering - Academic Affairs
 Electrical and ComputerEngineering
 Wythe Coop Extension Service
@@ -293,7 +294,6 @@ Vet Med Advancement
 Norfolk Coop Extension Service
 Cumberland Coop Extension Service
 The Inn at VT & Skelton Cnf Ctr
-Alexandria Coop Extension Service
 Global Education Office
 Catawba Sustainability Center
 Lee Coop Extension Service
@@ -369,7 +369,6 @@ Intercultural Engagement - Aux
 VT Exec Briefing Ctr-Arlington
 ME - Energy Harvesting Group
 ME - Varied Research Group
-FBRI Sontheimer Lab
 FBRI Smyth Lab
 FBRI Lamouille Lab
 FBRI Stein Lab
@@ -378,6 +377,7 @@ Surry Coop Extension Service
 SOAR - Student Opport & Achiev Res
 FBRI Howell Lab
 Ctr - Soft Matter & Biological Phys
+FBRI Sontheimer Lab
 FBRI Robel Lab
 Suffolk Coop Extension Service
 FBRI Johnstone Lab
@@ -408,6 +408,7 @@ Executive MBA Program
 Lancaster Coop Extension Service
 FBRI Shin Lab
 Bath Coop Extension Service
+Alexandria Coop Extension Service
 Nuclear Engineering
 Southwest 4-H Center
 Center for Neutrino Physics
@@ -447,4 +448,4 @@ Theatre Arts
 Agricultural, Leadership, and Community Education
 Medicine
 Agricultural and Applied Economics
-Finance, Insurance & Business
+Finance, Insurance &amp; Business
