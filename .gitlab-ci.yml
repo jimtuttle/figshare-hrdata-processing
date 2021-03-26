@@ -2,11 +2,7 @@ stages:
   - build
   - python_script
 
-default:
-  artifacts:
-    expire_in: 3 days
-
-build:
+build_image:
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -25,4 +21,5 @@ process_files:
     - python3 figshareFeedProcessor.py
   artifacts:
     paths: [manualdata.xml, figdata.xml, student_export.csv, hrfeed.xml]
+    expire_in: 7 days
   only: [schedules]
