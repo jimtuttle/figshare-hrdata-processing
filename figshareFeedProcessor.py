@@ -3,9 +3,10 @@ import xml.etree.ElementTree as ET
 from sys import exc_info
 import csv
 from datetime import date
-from requests import post
+from requests import post, Request
 from os import environ
 import boto3
+
 
 # Environmental variables
 manualdata = "manualdata.xml"
@@ -73,6 +74,10 @@ def process_student_data(studentfile):
         with open(studentfile, newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
+                if "& " in row["PrimaryGroupDescriptor"]:
+                    row["PrimaryGroupDescriptor"] = row["PrimaryGroupDescriptor"].replace("&", "&amp;")
+                if "& " in row["Department"]:
+                    row["Department"] = row["Department"].replace("&", "&amp;")
                 records.append(row)
         return records
     except():
@@ -182,10 +187,11 @@ def put_aws_files(keyid, accesskey, xmlfile, deptsfile):
 
 def update_figshare_api(url, token, outputfile):
     headers = {"Authorization": "token " + token}
-    files = {'hrfeed': outputfile}
-    response = post(url, files=files, headers=headers)
-    print(response.content)
-    response.raise_for_status()
+    with open(outputfile, "rb") as fin:
+        files = {"hrfeed": (outputfile, fin)}
+        response = post(url, files=files, headers=headers)
+        print(response.content)
+        response.raise_for_status()
 
 
 def send_message(key, url, sender, recipient, body):
