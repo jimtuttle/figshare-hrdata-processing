@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from sys import exc_info
 import csv
 from datetime import date
-from requests import post, Request
+from requests import post
 from os import environ
 import boto3
 
@@ -74,10 +74,6 @@ def process_student_data(studentfile):
         with open(studentfile, newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                if "& " in row["PrimaryGroupDescriptor"]:
-                    row["PrimaryGroupDescriptor"] = row["PrimaryGroupDescriptor"].replace("&", "&amp;")
-                if "& " in row["Department"]:
-                    row["Department"] = row["Department"].replace("&", "&amp;")
                 records.append(row)
         return records
     except():
@@ -141,7 +137,10 @@ def create_xml_output(records):
         for key, value in record.items():
             if key == "IsCurrent":
                 outxml += "<IsCurrent>Y</IsCurrent>\n"
-            elif (key == "PrimaryGroupDescriptor") or (key == "Username"):
+            if key == "Department":
+                if "& " in value:
+                    value = value.replace("&", "&amp;")
+            if (key == "PrimaryGroupDescriptor") or (key == "Username"):
                 pass  # Figshare isn't using these elements
             else:
                 outxml += "<%s>%s</%s>\n" % (key, value, key)
@@ -189,8 +188,9 @@ def update_figshare_api(url, token, outputfile):
     headers = {"Authorization": "token " + token}
     with open(outputfile, "rb") as fin:
         files = {"hrfeed": (outputfile, fin)}
-        response = post(url, files=files, headers=headers)
+        response = post(url, headers=headers, files=files)
         print(response.content)
+        # print(response.request.body)
         response.raise_for_status()
 
 
@@ -203,8 +203,8 @@ def send_message(key, url, sender, recipient, body):
         "subject": subject,
         "text": body
     })
-    print('Status: {0}'.format(response.status_code))
-    print('Body:   {0}'.format(response.text))
+    # print('Status: {0}'.format(response.status_code))
+    # print('Body:   {0}'.format(response.text))
 
 
 if __name__ == "__main__":
