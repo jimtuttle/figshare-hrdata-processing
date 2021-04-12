@@ -137,13 +137,14 @@ def create_xml_output(records):
         for key, value in record.items():
             if key == "IsCurrent":
                 outxml += "<IsCurrent>Y</IsCurrent>\n"
-            if key == "Department":
-                if "& " in value:
-                    value = value.replace("&", "&amp;")
-            if (key == "PrimaryGroupDescriptor") or (key == "Username"):
-                pass  # Figshare isn't using these elements
             else:
-                outxml += "<%s>%s</%s>\n" % (key, value, key)
+                if key == "Department":
+                    if "& " in value:
+                        value = value.replace("&", "&amp;")
+                if (key == "PrimaryGroupDescriptor") or (key == "Username"):
+                    pass  # Figshare isn't using these elements
+                else:
+                    outxml += "<%s>%s</%s>\n" % (key, value, key)
         if "Quota" not in record.keys():
             outxml += "<Quota>1073741824</Quota>\n"
         outxml += "</Record>\n"
@@ -190,7 +191,7 @@ def update_figshare_api(url, token, outputfile):
         files = {"hrfeed": (outputfile, fin)}
         response = post(url, headers=headers, files=files)
         print(response.content)
-        # print(response.request.body)
+        print(response.request.body)
         response.raise_for_status()
 
 
