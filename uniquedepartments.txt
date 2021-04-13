@@ -449,4 +449,5 @@ Agricultural and Applied Economics
 Theatre Arts
 Agricultural, Leadership, and Community Education
 Medicine
-Finance, Insurance & Business
+Agricultural and Applied Economics
+Finance, Insurance &amp; Business
