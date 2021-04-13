@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-export FIGSHARE_API_URL=""
-export FIGSHARE_TOKEN=""
+export FIGSHARE_API_URL_STAGE=""
+export FIGSHARE_TOKEN_STAGE=""
+export FIGSHARE_API_URL_PROD=""
+export FIGSHARE_TOKEN_PROD=""
 export MAILGUN_KEY=""
 export MAILGUN_URL=""
 export RECIPIENT_EMAIL="v"

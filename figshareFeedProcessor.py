@@ -15,8 +15,8 @@ studentdata = "student_export.csv"
 xmloutputfile = "hrfeed.xml"
 departmentsfile = "uniquedepartments.txt"
 # Figshare variables
-figshareurl = environ['FIGSHARE_API_URL']
-figsharetoken = environ['FIGSHARE_TOKEN']
+figshareurl = environ['FIGSHARE_API_URL_PROD']
+figsharetoken = environ['FIGSHARE_TOKEN_PROD']
 # Mailgun variables
 mailgunkey = environ['MAILGUN_KEY']
 mailgunurl = environ['MAILGUN_URL']
@@ -139,8 +139,8 @@ def create_xml_output(records):
                 outxml += "<IsCurrent>Y</IsCurrent>\n"
             else:
                 if key == "Department":
-                    if "& " in value:
-                        value = value.replace("&", "&amp;")
+                    if "&" in value:
+                        value = escape_ampersands(value)
                 if (key == "PrimaryGroupDescriptor") or (key == "Username"):
                     pass  # Figshare isn't using these elements
                 else:
@@ -153,6 +153,16 @@ def create_xml_output(records):
     f.write(outxml)
     f.close()
     return outxml
+
+
+def escape_ampersands(value):
+    occurrences = [pos for pos, char in enumerate(value) if char == "&"]
+    for o in reversed(occurrences):
+        if value[o:o+4] != "&amp;":
+            newvalue = value.replace(value[o], "&amp;")
+        else:
+            newvalue = value
+    return newvalue
 
 
 def build_message(manualrecs, staffrecs, studentrecs, dedupilcatedrecs, olddepartments, newdepartements, adddepartments,
@@ -191,7 +201,7 @@ def update_figshare_api(url, token, outputfile):
         files = {"hrfeed": (outputfile, fin)}
         response = post(url, headers=headers, files=files)
         print(response.content)
-        print(response.request.body)
+        #  print(response.request.body)
         response.raise_for_status()
 
 
