@@ -6,6 +6,7 @@ from datetime import date
 from requests import post, Request
 from os import environ
 import boto3
+import botocore
 
 
 # Environmental variables
@@ -29,9 +30,12 @@ awskey = environ["AWS_SECRET_ACCESS_KEY"]
 
 def get_aws_files(keyid, accesskey, manualfile, stafffile, studentfile):
     s3 = boto3.client("s3", aws_access_key_id=keyid, aws_secret_access_key=accesskey)
-    s3.download_file("vtlib-figshare-hrdata", manualfile, manualfile)
     s3.download_file("vtlib-figshare-hrdata", stafffile, stafffile)
     s3.download_file("vtlib-figshare-studentdata", studentfile, studentfile)
+    try:
+        s3.download_file("vtlib-figshare-hrdata", manualfile, manualfile)
+    except botocore.exceptions.ClientError as error:
+        print("Manual file not present")
 
 
 def process_manual_data(manualfile):

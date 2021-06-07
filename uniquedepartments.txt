@@ -29,7 +29,7 @@ Building Construction
 CALS Extension
 Dept. of Engineering Education
 Prince George Coop Extension Serv
-Communication
+School of Communication
 Apparel, Housing and Resource Mgmt
 Conservation Management Institute
 Roanoke Co Coop Extension Service
@@ -44,6 +44,7 @@ School of Performing Arts
 Honors College
 Psychology
 Forest Res & Environ Conserv
+Enrollment & Degree Management
 Mathematics
 Dean - Engineering
 Madison Coop Extension Service
@@ -63,7 +64,6 @@ Center for the Arts at VT
 BEAM
 CLAHS OOD Operations
 Aerospace and Ocean Engineering
-VTC School of Medicine-Instr Pgms
 Fish and Wildlife Conservation
 Modern & Classical Languages
 Tidewater AREC
@@ -71,6 +71,7 @@ Dairy Science
 Myers-Lawson School of Construction
 International Programs
 Materials Science & Engineering
+VTC School of Medicine-Instr Pgms
 Human Nutrition, Foods, & Exercise
 Pamplin Advancement
 Accounting & Information Systems
@@ -95,6 +96,7 @@ Human Nutrition, Foods & Exercise
 Agricultural & Applied Economics
 Rockingham Coop Extension Service
 Chesapeake Coop Extension Service
+Communication
 Ctr for Human/Computer Interaction
 Undergraduate Academic Affairs
 Geography
@@ -135,6 +137,7 @@ Population Health Sciences Dept
 FLSI - Genomics Sequencing Center
 Community Design Assistance Center
 VTTI - Automated Vehicle Systems
+James City Coop Extension Service
 Marketing
 Albemarle Coop Extension Service
 Floyd Coop Extension Service
@@ -196,7 +199,6 @@ Advantage VT Pathway Program
 Language and Culture Institute_BB
 Undergraduate Admissions
 VTTI - Vulnerable Road User Safety
-ME - Turbo Group
 CETL-Ctr Excellence Teaching & Lear
 Va Beach Coop Extension Service
 Export & Secure Research Compliance
@@ -250,6 +252,7 @@ Provost-Communication & Marketing
 FBRI S.Ramey Lab
 Arlington Coop Extension Service
 Southwest District Office
+Instit for Creativity, Arts & Tech
 TRiO Programs
 Southeast District Office
 Richmond Center
@@ -258,7 +261,6 @@ Frederick Coop Extension Service
 Adult Day Care
 Eastern Shore AREC
 College Access Collaborative
-ICTAS Sponsored Projects
 Architecture Support
 Equine Medical Ancillary
 Alleghany Coop Extension Service
@@ -274,7 +276,6 @@ Dickenson Coop Extension Service
 Buchanan Coop Extension Service
 Foreign Languages and Literatures
 Bland Coop Extension Service
-James City Coop Extension Service
 Hampton Coop Extension Service
 Giles Coop Extension Service
 Westmoreland Coop Extension Service
@@ -288,7 +289,6 @@ Fairfax Coop Extension Service
 CCI - SWVA Node
 Technology Implementation
 Accomack Coop Extension Service
-Enrollment & Degree Management
 FBRI Poelzing Lab
 Vet Med Advancement
 Norfolk Coop Extension Service
@@ -310,7 +310,6 @@ Vet Med Research & Graduate Studies
 Biological Sciences / BI
 Newport News Coop Extension Service
 FBRI Fox Lab
-Instit for Creativity, Arts & Tech
 CRMDS
 Highland Coop Extension Service
 Lunenburg Coop Extension Service
@@ -323,7 +322,6 @@ Academic Advising Initiatives
 Multicultural Academic Opport Prog
 Ctr for Innov & Entrepreneurship
 Amelia Coop Extension Service
-PMBA Program
 King George Coop Extension Service
 Housing Research Center
 Fluvanna Coop Extension Service
@@ -337,6 +335,7 @@ Eastern Virginia AREC
 Northumberland Coop Extension Serv
 Ctr for Inst Tech Sol in Ind & Edu
 Dynamic Systems Modeling & Control
+ME - Turbo Group
 FBRI Friedlander Lab
 FBRI LaConte Lab
 Essex Coop Extension Service
@@ -350,6 +349,7 @@ Carroll Coop Extension Service
 Center for Biostatistics & HDS
 FBRI Sheng Lab
 FBRI Gourdie Lab
+Global Forum on Resilience
 Hampton Roads Centers
 FBRI Swanger Lab
 Jamestown 4-H Center
@@ -371,6 +371,7 @@ ME - Energy Harvesting Group
 ME - Varied Research Group
 FBRI Smyth Lab
 FBRI Lamouille Lab
+Page Coop Extension Service
 FBRI Stein Lab
 Engineering Advancement
 Surry Coop Extension Service
@@ -384,8 +385,8 @@ FBRI Johnstone Lab
 Ctr For Intelligent Materials-CIMSS
 Link, Industrial Partnerships-OVPRI
 SoN-Clinton Lab
-Page Coop Extension Service
 Macromolecules Innovation Institute
+VTTI-Injury Biomechanics
 SoN-Hodes Lab
 FBRI Pan Lab
 Prince Edward Coop Extension Serv
@@ -402,7 +403,6 @@ Education Services
 Office of UG Academic Integrity
 Northern 4-H Center
 SoN English Lab
-Global Forum on Resilience
 Global Initiatives
 Executive MBA Program
 Lancaster Coop Extension Service
@@ -415,39 +415,38 @@ Center for Neutrino Physics
 Center for Tire Research
 Virginia Ctr for Civil War Studies
 Philosophy, Politics, and Economics
+Lynchburg Coop Extension Service
 FBRI Parker Lab
 Global Change Center
 Vet. Medicine Teaching Hospital
-Business
+FBRI Warren Lab
 Engineering Education
-Graduate Cooperative Program
 Civil and Environmental Engineering
-Biomedical and Veterinary Sciences
-Urban Affairs and Planning
-Population Health Sciences
 Veterinary Medicine
-Virginia Tech Carilion School of Medicine
+Biomedical and Veterinary Sciences
+Business
 Education, Curriculum and Instruction
-Materials Science and Engineering
-School of Communication
-Graduate School
-Department of Biomedical Engineering and Mechanics
+Population Health Sciences
 School of Plant and Environmental Science
 Accounting and Information Systems
-Forest Resources and Environmental Conservation
-Agriculture and Life Sciences
+Graduate School
+Department of Biomedical Engineering and Mechanics
 Natural Resources
-Hospitality and Tourism Management
-Art and Art History
+Human Nutrition, Foods and Exercise
+Urban Affairs and Planning
+NONE
+Agriculture and Life Sciences
+Forest Resources and Environmental Conservation
 Neuroscience
 Human Development and Family Sciences
-NONE
+Agricultural and Applied Economics
 Modern and Classical Languages and Literatures
-Human Nutrition, Foods and Exercise
-Mining Engineering
-Agricultural and Applied Economics
-Theatre Arts
-Agricultural, Leadership, and Community Education
-Medicine
-Agricultural and Applied Economics
 Finance, Insurance &amp; Business
+Materials Science and Engineering
+Art and Art History
+Graduate Cooperative Program
+Theatre Arts
+Mining Engineering
+Agricultural, Leadership, and Community Education
+Hospitality and Tourism Management
+Virginia Tech Carilion School of Medicine
